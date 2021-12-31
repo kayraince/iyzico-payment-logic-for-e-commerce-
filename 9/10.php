@@ -9,16 +9,17 @@ function iyz_cut($Price, $iyz_variable) {
     return $cut;
 }
 
-function art_cut($Price, $iyz_variable, $com_art){
+function art_cut($Price, $iyz_variable, $com_art, $VAT){
     $art_profit = ($Price * $com_art/100) - iyz_cut($Price, $iyz_variable);
-    return $art_profit;
+    return $art_profit * (1 + ($VAT/100));
 }
-function iyzicoPass($Price, $iyz_variable, $com_art, $shipping){
-    $vendor_cut = $Price - art_cut($Price, $iyz_variable, $com_art);
-    $iyzi_final = $vendor_cut - $shipping;
-    return $iyzi_final;
+function iyzicoPass($Price, $iyz_variable, $com_art, $shipping, $VAT){
+    $vendor_cut = $Price - art_cut($Price, $iyz_variable, $com_art, $VAT);
+    $iyzi_final = $vendor_cut - ($shipping * (1 + ($VAT/100)));
+    echo $iyzi_final;
 }
-iyzicoPass(100, 2.99,25,15); // call the function
+
+iyzicoPass(1000, 2.99,25,30,18); // call the function
 
 ?>
 
